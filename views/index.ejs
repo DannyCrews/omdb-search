@@ -1,19 +1,22 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <meta charset="utf-8">
-  <title>OMDB Search</title>
-  <link rel="stylesheet" href="app.css">
-</head>
-<body>
-<h1>OMDB Movie Search</h1>
-<div>
-  <form action="">
-    <h2>Search for a Movie</h2>
-    <input type="text" placeholder="Movie Title">
-    <input type="submit">
-  </form>
-</div>
-<script type="text/javascript" src="app.js"></script>
-</body>
+  <head>
+    <meta charset="utf-8">
+    <title>OMDB Search</title>
+    <link rel="stylesheet" href="app.css">
+  </head>
+
+  <body>
+    <h1>OMDB Movie Search</h1>
+    <div>
+      <form id="search-form" action="">
+        <h2>Search for a Movie</h2>
+        <fieldset>
+          <input type="text" id="movie-title" placeholder="Movie Title">
+          <button type="submit">Find It!</button>
+        </fieldset>
+      </form>
+    </div>
+  <script type="text/javascript" src="app.js"></script>
+  </body>
 </html>
