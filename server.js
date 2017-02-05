@@ -14,15 +14,17 @@ app.use(logger("dev"));
 
 // set up serving of static assets
 // change 'join' to 'resolve' - make it crossplatform
-var publicPath = path.resolve(__dirname, 'public');
-app.use(express.static(publicPath));
+app.use(express.static(path.resolve(__dirname, 'public')));
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json());
+
+app.set("views", path.resolve(__dirname, "views"))
+app.set("view engine", "ejs");
 
 // add missing ')'
 // change 'use' to get and render index
 app.get('/', function(req, res){
-  res.end('index');
+  res.render("index");
 });
 
 app.get('/favorites', function(req, res){
