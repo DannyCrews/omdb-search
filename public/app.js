@@ -1,6 +1,5 @@
 // wait until DOM is loaded
 document.addEventListener("DOMContentLoaded", function() {
-
   //  Listen for search submittal
   document.querySelector('#search-button').addEventListener("click", function(e){
     var title = document.getElementById("movie-title").value;
@@ -8,34 +7,65 @@ document.addEventListener("DOMContentLoaded", function() {
     var searchString = BASE_URL + title.split(' ').join('+');
 
     getMovie(searchString);
+
+    // function showSpinner() {
+    //   loadingDiv.style.visibility = 'visible';
+    // }
+
+    // function hideSpinner() {
+    //   loadingDiv.style.visibility = 'hidden';
+    // }
+
   });
 
   function getMovie(searchString) {
-    var resultContainer = document.querySelector(".search-results");
-
     fetch(searchString, {
       method: 'get'
     })
     .then(function(response) {
+      // console.log(response);
       return response.json();
     })
     .then(function(searchResp) {
-      document.querySelector("#movie-title").value = '';
-      resultContainer.innerHTML = '';
-
-      var results = searchResp.Search;
-      console.log(results);
-      for ( i = 0; i < results.length; i++) {
-        var titleParagraph = document.createElement("p");
-        var movie = document.createTextNode(results[i].Title);
-        titleParagraph.appendChild(movie);
-        console.log(titleParagraph);
-        resultContainer.appendChild(titleParagraph);
-      }
+      listMovies(searchResp);
     })
     .catch(function(err) {
       console.log(err);
-    });
+    })
+  }
+
+  function listMovies(searchResp) {
+    var resultContainer = document.querySelector(".search-results");
+    // console.log(searchResp);
+    // clear search
+    document.querySelector("#movie-title").value = '';
+    resultContainer.innerHTML = '';
+
+    var results = searchResp.Search;
+    // console.log(results);
+    for ( i = 0; i < results.length; i++) {
+      var movieDetails = movieData(results[i]);
+      var movie = document.createTextNode(results[i].Title);
+      // console.log(movieDetails);
+      var titleLink = document.createElement("a");
+      titleLink.setAttribute("href", "#");
+      titleLink.setAttribute("id", `movie-title-${i}`);
+      titleLink.appendChild(movie);
+      // console.log(titleLink);
+      resultContainer.appendChild(titleLink).addEventListener("click", function() {
+        console.log(movieDetails);;
+      });;
+    }
+  }
+
+  function movieData(movie) {
+    return {
+      poster: movie.Poster,
+      title: movie.Title,
+      type: movie.Type,
+      year: movie.Year,
+      imdbID: movie.imdbID,
+    };
   }
 
 });
