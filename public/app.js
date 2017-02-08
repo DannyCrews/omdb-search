@@ -56,8 +56,6 @@ document.addEventListener("DOMContentLoaded", function() {
     let favorites = [];
     modalBody.innerHTML = '';
 
-    console.log(result);
-
     modalBody.insertAdjacentHTML('beforeend', `<img src=${result['Poster']}>`)
     for (let stat in result) {
       let statAttr = `<strong>${stat}:</strong> `;
@@ -67,7 +65,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     document.querySelector("#favorite-button").addEventListener("click", function() {
-      console.log("fav button clicked");
+      postFavorite(result);
     });
 
     // open and close modal
@@ -84,6 +82,32 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
   }
+
+  // function postFavorite(movie) {
+  //   fetch('/favorites', {
+  //     method: 'post',
+  //     body: JSON.stringify(movie)
+  //   })
+  //   .then(function (data) {
+  //     console.log('Request success: ', data);
+  //   })
+  //   .catch(function (error) {
+  //     console.log('Request failure: ', error);
+  //   });
+  // }
+  function postFavorite(movie) {
+    let request = new XMLHttpRequest();
+    request.open("POST", "/favorites", true);
+    request.setRequestHeader("Content-type", "application/json");
+
+    request.send(JSON.stringify(movie));
+  }
+
+
+
+
+
+
 
   function makeLink(linkText, index) {
     let link = document.createElement("a");

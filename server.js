@@ -10,13 +10,14 @@ var app = express();
 
 // add logger to middleware
 app.use(logger("dev"));
+
 // set up serving of static assets
 // change 'join' to 'resolve' - make it crossplatform
 app.use(express.static(path.join(__dirname, '/public')));
-app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.get('/', express.static(path.join(__dirname, 'public')));
+app.use('/', express.static(path.join(__dirname, 'public')));
 // app.set("views", path.resolve(__dirname, "views"))
 // app.set("view engine", "ejs");
 
@@ -33,13 +34,15 @@ app.get('/favorites', function(req, res){
 // add missing '})'
 });
 
-app.get('favorites', function(req, res){
-  if(!req.body.name || !req.body.oid){
+// change HTML method to POST
+app.post('/favorites', function(req, res){
+  if(!req.body.Type || !req.body.imdbID){
+    console.log(req.body);
     res.send("Error");
     return
-  // add closing '}'
+  // add missing bracket
   }
-
+  console.log('in post');
   var data = JSON.parse(fs.readFileSync('./data.json'));
   data.push(req.body);
   fs.writeFile('./data.json', JSON.stringify(data));
