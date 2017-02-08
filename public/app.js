@@ -7,32 +7,11 @@ document.addEventListener("DOMContentLoaded", function() {
     var searchString = BASE_URL + title.split(' ').join('+');
 
     getMovie(searchString);
-
-    // function showSpinner() {
-    //   loadingDiv.style.visibility = 'visible';
-    // }
-
-    // function hideSpinner() {
-    //   loadingDiv.style.visibility = 'hidden';
-    // }
-
   });
 
-  function getMovie(searchString) {
-    fetch(searchString, {
-      method: 'get'
-    })
-    .then(function(response) {
-      // console.log(response);
-      return response.json();
-    })
-    .then(function(searchResp) {
-      listMovies(searchResp);
-    })
-    .catch(function(err) {
-      console.log(err);
-    });
-  }
+  document.querySelector('.favorite-link').addEventListener("click", function() {
+    getFavorites();
+  });
 
   function listMovies(searchResp) {
     var resultContainer = document.querySelector(".search-results");
@@ -50,10 +29,29 @@ document.addEventListener("DOMContentLoaded", function() {
     }
   }
 
+  function listFavorites(favorites) {
+    let favoriteContainer = document.querySelector(".show-favorites");
+    // document.querySelector("#movie-title").value = '';
+    // console.log(favorites);
+    favoriteContainer.innerHTML = '';
+    favoriteContainer.style.display = 'block';
+
+    for(let i=0; i < favorites.length; i++) {
+      let favorite = favorites[i];
+      let titleString = `<p class="title-string">${favorite.Title}</p>`;
+      favoriteContainer.insertAdjacentHTML('beforeend', titleString);
+    }
+    favoriteContainer.insertAdjacentHTML('beforeend', '<button class="close">Close</button>');
+
+    document.querySelector(".close").addEventListener("click", function() {
+      favoriteContainer.style.display = 'none';
+    });
+  }
+
 
   function showModal(result) {
     let modalBody = document.querySelector('.modal-body');
-    let favorites = [];
+    // let favorites = [];
     modalBody.innerHTML = '';
 
     modalBody.insertAdjacentHTML('beforeend', `<img src=${result['Poster']}>`)
@@ -80,7 +78,39 @@ document.addEventListener("DOMContentLoaded", function() {
           modal.style.display = "none";
       }
     }
+  }
 
+  function getMovie(searchString) {
+    fetch(searchString, {
+      method: 'get'
+    })
+    .then(function(response) {
+      // console.log(response);
+      return response.json();
+    })
+    .then(function(searchResp) {
+      listMovies(searchResp);
+    })
+    .catch(function(err) {
+      console.log(err);
+    });
+  }
+
+  function getFavorites() {
+    fetch('/favorites', {
+      method: 'get'
+    })
+    .then(function(response) {
+      // console.log(response);
+      return response.json();
+    })
+    .then(function(favorites) {
+      console.log(favorites);
+      listFavorites(favorites);
+    })
+    .catch(function(err) {
+      console.log(err);
+    });
   }
 
   function postFavorite(movie) {
