@@ -36,36 +36,77 @@ document.addEventListener("DOMContentLoaded", function() {
 
   function listMovies(searchResp) {
     var resultContainer = document.querySelector(".search-results");
-    // console.log(searchResp);
-    // clear search
     document.querySelector("#movie-title").value = '';
     resultContainer.innerHTML = '';
 
     var results = searchResp.Search;
-    // console.log(results);
-    for ( i = 0; i < results.length; i++) {
-      var movieDetails = movieData(results[i]);
-      var movie = document.createTextNode(results[i].Title);
-      // console.log(movieDetails);
-      var titleLink = document.createElement("a");
-      titleLink.setAttribute("href", "#");
-      titleLink.setAttribute("id", `movie-title-${i}`);
-      titleLink.appendChild(movie);
-      // console.log(titleLink);
-      resultContainer.appendChild(titleLink).addEventListener("click", function() {
-        console.log(movieDetails);;
-      });;
+    for ( let i = 0; i < results.length; i++) {
+      let movieTitle = document.createTextNode(results[i].Title);
+      let movieType = document.createTextNode(results[i].Type);
+      let movieYear = document.createTextNode(results[i].Year);
+      let movieimdbID = document.createTextNode(results[i].imdbID);
+      let moviePoster = document.createTextNode(results[i].Poster);
+
+      var titleLink = makeLink(movieTitle, i);
+      resultContainer.appendChild(titleLink).addEventListener("click", function(){
+        showModal(results[i])
+      });
     }
   }
 
-  function movieData(movie) {
-    return {
-      poster: movie.Poster,
-      title: movie.Title,
-      type: movie.Type,
-      year: movie.Year,
-      imdbID: movie.imdbID,
-    };
+  function showModal(result) {
+    var modalBody = document.querySelector('.modal-body');
+    modalBody.innerHTML = '';
+    //
+    let movieTitle = document.createTextNode(result.Title);
+    let movieType = document.createTextNode(result.Type);
+    let movieYear = document.createTextNode(result.Year);
+    let movieimdbID = document.createTextNode(result.imdbID);
+    let moviePoster = document.createTextNode(result.Poster);
+    var modal = document.getElementById('movie-details');
+    var span = document.getElementsByClassName("close")[0];
+    modal.style.display = 'block';
+    span.onclick = function() {
+        modal.style.display = "none";
+    }
+    window.onclick = function(event) {
+      if (event.target == modal) {
+          modal.style.display = "none";
+      }
+    }
+
+    var titleP = modalBody.appendChild(document.createElement('p'))
+    titleP.appendChild(movieTitle);
+
+    var movieP = modalBody.appendChild(document.createElement('p'))
+    movieP.appendChild(movieType);
+
+    var yearP = modalBody.appendChild(document.createElement('p'))
+    yearP.appendChild(movieYear);
+
+    var imdbP = modalBody.appendChild(document.createElement('p'))
+    imdbP.appendChild(movieimdbID);
+
+    var posterP = modalBody.appendChild(document.createElement('p'))
+    posterP.appendChild(moviePoster);
   }
+
+  function makeLink(linkText, index) {
+    var link = document.createElement("a");
+    link.setAttribute("href", "#");
+    link.setAttribute("id", `movie-title-${index}`);
+    link.appendChild(linkText);
+    return link;
+  }
+
+  // function movieData(movie) {
+  //   return {
+  //     poster: movie.Poster,
+  //     title: movie.Title,
+  //     type: movie.Type,
+  //     year: movie.Year,
+  //     imdbID: movie.imdbID,
+  //   };
+  // }
 
 });
