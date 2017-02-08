@@ -42,10 +42,6 @@ document.addEventListener("DOMContentLoaded", function() {
     var results = searchResp.Search;
     for ( let i = 0; i < results.length; i++) {
       let movieTitle = document.createTextNode(results[i].Title);
-      let movieType = document.createTextNode(results[i].Type);
-      let movieYear = document.createTextNode(results[i].Year);
-      let movieimdbID = document.createTextNode(results[i].imdbID);
-      let moviePoster = document.createTextNode(results[i].Poster);
 
       var titleLink = makeLink(movieTitle, i);
       resultContainer.appendChild(titleLink).addEventListener("click", function(){
@@ -54,17 +50,29 @@ document.addEventListener("DOMContentLoaded", function() {
     }
   }
 
+
   function showModal(result) {
-    var modalBody = document.querySelector('.modal-body');
+    let modalBody = document.querySelector('.modal-body');
+    let favorites = [];
     modalBody.innerHTML = '';
-    //
-    let movieTitle = document.createTextNode(result.Title);
-    let movieType = document.createTextNode(result.Type);
-    let movieYear = document.createTextNode(result.Year);
-    let movieimdbID = document.createTextNode(result.imdbID);
-    let moviePoster = document.createTextNode(result.Poster);
-    var modal = document.getElementById('movie-details');
-    var span = document.getElementsByClassName("close")[0];
+
+    console.log(result);
+
+    modalBody.insertAdjacentHTML('beforeend', `<img src=${result['Poster']}>`)
+    for (let stat in result) {
+      let statAttr = `<strong>${stat}:</strong> `;
+      let statVal = `<span class="stat-value">${result[stat]}</span>`
+      let statString = `<p class="stat-string">${statAttr}${statVal}</p>`;
+      modalBody.insertAdjacentHTML('beforeend', statString);
+    }
+
+    document.querySelector("#favorite-button").addEventListener("click", function() {
+      console.log("fav button clicked");
+    });
+
+    // open and close modal
+    let modal = document.getElementById('movie-details');
+    let span = document.getElementsByClassName("close")[0];
     modal.style.display = 'block';
     span.onclick = function() {
         modal.style.display = "none";
@@ -75,24 +83,10 @@ document.addEventListener("DOMContentLoaded", function() {
       }
     }
 
-    var titleP = modalBody.appendChild(document.createElement('p'))
-    titleP.appendChild(movieTitle);
-
-    var movieP = modalBody.appendChild(document.createElement('p'))
-    movieP.appendChild(movieType);
-
-    var yearP = modalBody.appendChild(document.createElement('p'))
-    yearP.appendChild(movieYear);
-
-    var imdbP = modalBody.appendChild(document.createElement('p'))
-    imdbP.appendChild(movieimdbID);
-
-    var posterP = modalBody.appendChild(document.createElement('p'))
-    posterP.appendChild(moviePoster);
   }
 
   function makeLink(linkText, index) {
-    var link = document.createElement("a");
+    let link = document.createElement("a");
     link.setAttribute("href", "#");
     link.setAttribute("id", `movie-title-${index}`);
     link.appendChild(linkText);
