@@ -2,9 +2,9 @@
 document.addEventListener("DOMContentLoaded", function() {
   //  Listen for search submittal
   document.querySelector('#search-button').addEventListener("click", function(e){
-    var title = document.getElementById("movie-title").value;
-    var BASE_URL = 'http://www.omdbapi.com/?s=';
-    var searchString = BASE_URL + title.split(' ').join('+');
+    let title = document.getElementById("movie-title").value;
+    const BASE_URL = 'http://www.omdbapi.com/?s=';
+    let searchString = BASE_URL + title.split(' ').join('+');
 
     getMovie(searchString);
   });
@@ -14,16 +14,17 @@ document.addEventListener("DOMContentLoaded", function() {
   });
 
   function listMovies(searchResp) {
-    var resultContainer = document.querySelector(".search-results");
+    const resultContainer = document.querySelector(".search-results");
     document.querySelector("#movie-title").value = '';
     resultContainer.innerHTML = '';
 
-    var results = searchResp.Search;
+    let results = searchResp.Search;
     for ( let i = 0; i < results.length; i++) {
-      let movieTitle = document.createTextNode(results[i].Title);
+      let movieTitle = results[i].Title;
+      let titleString = `<a href="#" id="movie-title-${i}">${movieTitle}</a>`;
+      resultContainer.insertAdjacentHTML('beforeend', titleString);
 
-      var titleLink = makeLink(movieTitle, i);
-      resultContainer.appendChild(titleLink).addEventListener("click", function(){
+      resultContainer.querySelector(`#movie-title-${i}`).addEventListener("click", function(){
         showModal(results[i])
       });
     }
@@ -31,10 +32,9 @@ document.addEventListener("DOMContentLoaded", function() {
 
   function listFavorites(favorites) {
     let favoriteContainer = document.querySelector(".show-favorites");
-    // document.querySelector("#movie-title").value = '';
-    // console.log(favorites);
     favoriteContainer.innerHTML = '';
     favoriteContainer.style.display = 'block';
+    favoriteContainer.insertAdjacentHTML('beforeend', '<h3>Favorites</h3>');
 
     for(let i=0; i < favorites.length; i++) {
       let favorite = favorites[i];
@@ -51,7 +51,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
   function showModal(result) {
     let modalBody = document.querySelector('.modal-body');
-    // let favorites = [];
     modalBody.innerHTML = '';
 
     modalBody.insertAdjacentHTML('beforeend', `<img src=${result['Poster']}>`)
@@ -85,7 +84,6 @@ document.addEventListener("DOMContentLoaded", function() {
       method: 'get'
     })
     .then(function(response) {
-      // console.log(response);
       return response.json();
     })
     .then(function(searchResp) {
@@ -101,11 +99,9 @@ document.addEventListener("DOMContentLoaded", function() {
       method: 'get'
     })
     .then(function(response) {
-      // console.log(response);
       return response.json();
     })
     .then(function(favorites) {
-      console.log(favorites);
       listFavorites(favorites);
     })
     .catch(function(err) {
@@ -128,24 +124,4 @@ document.addEventListener("DOMContentLoaded", function() {
       console.log('Request failure: ', error);
     });
   }
-
-
-  function makeLink(linkText, index) {
-    let link = document.createElement("a");
-    link.setAttribute("href", "#");
-    link.setAttribute("id", `movie-title-${index}`);
-    link.appendChild(linkText);
-    return link;
-  }
-
-  // function movieData(movie) {
-  //   return {
-  //     poster: movie.Poster,
-  //     title: movie.Title,
-  //     type: movie.Type,
-  //     year: movie.Year,
-  //     imdbID: movie.imdbID,
-  //   };
-  // }
-
 });
