@@ -21,11 +21,7 @@ app.use('/', express.static(path.join(__dirname, 'public')));
 // app.set("views", path.resolve(__dirname, "views"))
 // app.set("view engine", "ejs");
 
-// add missing ')'
-// change 'use' to get and render index
-// app.get('/', function(req, res){
-//   res.render("index");
-// });
+// add missing ')';
 
 app.get('/favorites', function(req, res){
   var data = fs.readFileSync('./data.json');

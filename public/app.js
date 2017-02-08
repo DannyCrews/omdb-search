@@ -31,7 +31,7 @@ document.addEventListener("DOMContentLoaded", function() {
     })
     .catch(function(err) {
       console.log(err);
-    })
+    });
   }
 
   function listMovies(searchResp) {
@@ -83,30 +83,21 @@ document.addEventListener("DOMContentLoaded", function() {
 
   }
 
-  // function postFavorite(movie) {
-  //   fetch('/favorites', {
-  //     method: 'post',
-  //     body: JSON.stringify(movie)
-  //   })
-  //   .then(function (data) {
-  //     console.log('Request success: ', data);
-  //   })
-  //   .catch(function (error) {
-  //     console.log('Request failure: ', error);
-  //   });
-  // }
   function postFavorite(movie) {
-    let request = new XMLHttpRequest();
-    request.open("POST", "/favorites", true);
-    request.setRequestHeader("Content-type", "application/json");
-
-    request.send(JSON.stringify(movie));
+    fetch('/favorites', {
+      method: 'post',
+      headers: {
+          "Content-Type": "application/json"
+        },
+      body: JSON.stringify(movie)
+    })
+    .then(function (data) {
+      console.log('Request success: ', data);
+    })
+    .catch(function (error) {
+      console.log('Request failure: ', error);
+    });
   }
-
-
-
-
-
 
 
   function makeLink(linkText, index) {
