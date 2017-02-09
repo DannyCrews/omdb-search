@@ -8,7 +8,7 @@
 
 #### Deployment
 
-- This application is deployed on [Heroku](https://infinite-shore-67981.herokuapp.com/#)
+- This application is deployed on [Heroku](http://infinite-shore-67981.herokuapp.com/#)
 
 - To deploy it locally, clone the respository and run:
   - npm install
