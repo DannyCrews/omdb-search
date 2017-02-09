@@ -35,12 +35,10 @@ app.get('/favorites', function(req, res){
 // change HTML method to POST
 app.post('/favorites', function(req, res){
   if(!req.body.Type || !req.body.imdbID){
-    console.log(req.body);
     res.send("Error");
     return
   // add missing bracket
   }
-  console.log('in post');
   var data = JSON.parse(fs.readFileSync('./data.json'));
   data.push(req.body);
   fs.writeFile('./data.json', JSON.stringify(data));

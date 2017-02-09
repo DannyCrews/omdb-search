@@ -2,45 +2,30 @@
 
 ## WDI Instructor Code Challenge
 
-### GOAL 
+### GOAL
 
-> Create a single page application that will utilize an external API to request movie data. The client side application will be served by a back-end which will have the ability to persist data.
+> Create a single page application that will utilize an external API to request movie data. The client side application will be served by a back-end which will have the ability to persist data. The page should have a form that uses the [OMDBapi](http://www.omdbapi.com/) to search for matching movies and then display the results. When the user clicks on a search result display detailed information about that movie. Users should be able to "favorite" a movie and have it persisted via the provided back-end. Provide a link to display favorited movies.
 
-#### Back-end Instructions
+#### Deployment
 
-- Within this repo you will have noticed two folders entitled `node-backend-starter-code` and `ruby-backend-starter-code`. Each of these contains similar back-ends written in frameworks respective to their languages - Sinatra for Ruby and Express for Node.
+- This application is deployed on [Heroku](https://infinite-shore-67981.herokuapp.com/#)
 
-- Please **choose one** of the back-ends before you proceed. Feel free to pick whichever language you feel more comfortable in.
+- To deploy it locally, clone the respository and run:
+  - npm install
+  - npm start
 
-- Both back-ends contain several errors that commonly made by students, so you will need to do some debugging to ensure they are working correctly.
+#### Some Details
 
-#### Front-end Instructions
+- The application is built on Node.js and Vanilla JavaScript.
+- The server is built on Express.js
+- Favorites data is persisted in a data.json file in the root directory
+- The Kickstart CSS library is used to grab some quick styling while avoiding jQuery
 
-- Use Vanilla Javascript to complete.
-
-- The page should have a form that uses the [OMDBapi](http://www.omdbapi.com/) to search for matching movies and then display the results.
- - *Example*: If a user searches for `Star Wars`, a list of every Star Wars movie will be displayed.
-
-- When the user clicks on a search result display detailed information about that movie.
-  - *Example*: If a user is viewing a list of every Star Wars movie and clicks on `Star Wars: A New Hope`, detailed information about that specific movie will be displayed.
-
-- Users should be able to "favorite" a movie and have it persisted via the provided back-end.
-
-- Provide a link to display favorited movies.
-
-#### Things we are looking for
-
-- Clear, simple code
-- Explanatory comments for beginners
-- Consistent Naming Conventions
-- Valid HTML, CSS, and JavaScript
-
-#### Deliverables
-
-- Please send us back a link to a git repo with the completed code challenge. 
-
-- Include a README.md file in your repo with a link to your application deployed on Heroku or Digital Ocean.
-
-#### Bonus
-
-- Rewrite the application using a JavaScript MVC library. Include a readme that explains the benefits and any additional challenges students would face learning the library
+#### More to Do
+- Add the ability to delete favorites from the data.json file
+- Replace favorite saved alert with a more elegant notification
+- Add some additional data from omdbapi
+- Get full list from omdbapi and paginate (api returns 10 movies by default)
+- Add some tests (I know! I know! - I'm working for speed here ;)
+- Get the rest of the styling ironed out
+- Add a spinner because omdbapi is slowwwww
