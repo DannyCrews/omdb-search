@@ -58,13 +58,14 @@
 .search-results {
     width: 45%;
     float: left;
+    visibility: hidden;
 }
 
 .show-favorites {
     width: 45%;
     float: right;
+    visibility: hidden;
 }
-
 
 
 @font-face {
@@ -4490,3 +4491,4 @@ svg.icon .lg,svg.icon .rg {
     display: inline-block;
     margin-right: 5px
 }
+

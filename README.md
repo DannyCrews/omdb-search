@@ -23,6 +23,7 @@
 
 #### More to Do
 - Add the ability to delete favorites from the data.json file
+- Update favorites in real time if list is open
 - Replace favorite saved alert with a more elegant notification
 - Add some additional data from omdbapi
 - Get full list from omdbapi and paginate (api returns 10 movies by default)

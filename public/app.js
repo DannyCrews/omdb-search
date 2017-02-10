@@ -22,6 +22,7 @@ document.addEventListener("DOMContentLoaded", function() {
     // clear any prior search content
     document.querySelector("#movie-title").value = '';
     resultContainer.innerHTML = '';
+    resultContainer.style.visibility = 'visible';
 
     let results = searchResp.Search;
     for ( let i = 0; i < results.length; i++) {
@@ -41,6 +42,7 @@ document.addEventListener("DOMContentLoaded", function() {
     let favoriteContainer = document.querySelector(".show-favorites");
     favoriteContainer.innerHTML = '';
     favoriteContainer.style.display = 'block';
+    favoriteContainer.style.visibility = 'visible';
     favoriteContainer.insertAdjacentHTML('beforeend', '<h3>Favorites</h3>');
 
     for(let i=0; i < favorites.length; i++) {
@@ -52,7 +54,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // hide the favorites div when the close button is clicked
     document.querySelector(".close").addEventListener("click", function() {
-      favoriteContainer.style.display = 'none';
+      favoriteContainer.style.visibility = 'hidden';
     });
   }
 
