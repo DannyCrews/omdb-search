@@ -20,9 +20,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.use('/', express.static(path.join(__dirname, 'public')));
-// app.set("views", path.resolve(__dirname, "views"))
-// app.set("view engine", "ejs");
-
 // add missing ')';
 
 app.get('/favorites', function(req, res){

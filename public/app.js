@@ -56,7 +56,6 @@ document.addEventListener("DOMContentLoaded", function() {
     });
   }
 
-
   // Generates and displays the movie details modal
   function showModal(result) {
       // open and close modal
@@ -71,11 +70,6 @@ document.addEventListener("DOMContentLoaded", function() {
         favButton.removeEventListener('click', addFavorite);
         modal.style.display = "none";
       });
-      // window.onclick = function(event) {
-      //   if (event.target == modal) {
-      //       modal.style.display = "none";
-      //   }
-      // }
 
       modalBody.innerHTML = '';
 
@@ -95,7 +89,6 @@ document.addEventListener("DOMContentLoaded", function() {
       };
       favButton.addEventListener("click", addFavorite);
     }
-
 
   // Fetch API call to get json from omdbiapi or favorites
   function getData(targetURL, resultCallback) {
